@@ -15,8 +15,9 @@
         <a class="nav-link" href="#">my page</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Log out</a>
+        <a class="nav-link disabled" href="{{ route('logout') }}">Log out</a>
       </li>
     </ul>
   </div>
+
 </nav>
