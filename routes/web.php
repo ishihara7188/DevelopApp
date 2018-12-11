@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/index', 'IndexController@index')->middleware('auth');
+Route::post('/index', 'IndexController@store');
 
 Auth::routes();
 
