@@ -16,7 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/index', 'IndexController@index')->middleware('auth');
-Route::post('/index', 'IndexController@store');
+Route::post('/index', 'IndexController@store')->middleware('auth');
+Route::post('/schedule/delete', 'IndexController@destroy')->middleware('auth');
 
 Auth::routes();
 
