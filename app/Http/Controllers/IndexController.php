@@ -36,6 +36,19 @@ class IndexController extends Controller
         return redirect('/index');
     }
 
+    public function edit(Request $request) {
+        $date = Schedule::find($request->id);;
+        return view ('/edit', ['date' => $date]);
+    }
+
+    public function update(Request $request) {
+        $date = Schedule::find($request->id);
+        $date->shift_time = $request->shift_time;
+        $date->user_id = Auth::id();;
+        $date->save();
+        return redirect('/index');
+    }
+
     public function destroy(Request $request) {
 // Log::debug("destroy----");
         Schedule::destroy($request->id);
