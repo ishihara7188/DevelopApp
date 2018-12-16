@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Schedule;
+use App\Calender;
 use Illuminate\Support\Facades\Auth;
+
 
 class IndexController extends Controller
 {
@@ -13,8 +15,10 @@ class IndexController extends Controller
 
         $sched = new Schedule;
         $get = $sched->getAll();
-        // var_dump($get);
-        return view('index', ['get' => $get]);
+
+        $carbon = new Calender;
+        $car = $carbon->getCalendarDates(date("Y"),date("m"));
+        return view('index', ['car' => $car, 'get' => $get]);
     }
 
     public function store(Request $request){
@@ -22,6 +26,7 @@ class IndexController extends Controller
 // Log::debug("destroy----2");
         $validator = Validator::make($request->all(), [
             'shift_time' => 'required',
+            'body' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -30,6 +35,7 @@ class IndexController extends Controller
 
         $date = new Schedule;
         $date->shift_time = $request->shift_time;
+        $date->body = $request->body;
         $date->user_id = Auth::id();;
         $date->save();
 
@@ -44,6 +50,7 @@ class IndexController extends Controller
     public function update(Request $request) {
         $date = Schedule::find($request->id);
         $date->shift_time = $request->shift_time;
+        $date->body = $request->body;
         $date->user_id = Auth::id();;
         $date->save();
         return redirect('/index');

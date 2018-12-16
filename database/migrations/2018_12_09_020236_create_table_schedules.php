@@ -17,6 +17,7 @@ class CreateTableSchedules extends Migration
           $table->increments('id');
           $table->integer('user_id')->unsigned();
           $table->dateTime('shift_time');
+          $table->string('body');
           $table->foreign('user_id')->references('id')->on('users');
           $table->timestamps();
       });

@@ -12,6 +12,7 @@
               {{ csrf_field() }}
               <input type="hidden" name="id" value="{{ $date->id }}">
               <input type="input" name="shift_time" value="{{ $date->shift_time }}">
+              <input type="input" name="body" value="{{ $date->body }}">
               <button type="submit" class="ml-3">update</button>
           </form>
       </div>
