@@ -11,6 +11,8 @@
        <!-- Styles -->
        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
        <script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript" language="javascript"></script>
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+       <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
        <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
   </head>
@@ -19,5 +21,14 @@
       <div class="container">
           @yield('content')
       </div>
+  <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+  <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
+  <script>
+    flatpickr(document.getElementById('shift_time'), {
+      locale: 'ja',
+      dateFormat: "Y/m/d",
+      minDate: new Date()
+    });
+  </script>
   </body>
 </html>
