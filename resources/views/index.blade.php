@@ -1,9 +1,10 @@
 @extends('layouts.top')
 @section('title', 'Scheduler')
 @section('content')
-    <h1>Scheduler</h1>
+    <h1 class="mt-0">Scheduler</h1>
     <p>Type your schedule.</p>
 
+    <!-- ↓↓↓ 投稿フォーム ↓↓↓ -->
     <form action="{{ url('/index') }}" method="post" class="mb-5">
         {{ csrf_field() }}
         @if($errors->any())
@@ -23,17 +24,16 @@
                 <input type="input" name="body" value="{{ old('body') }}">
             </div>
         </div>
-        <button type="submit" class="ml-3">create</button>
+        <button type="submit" class="btn btn-primary">create</button>
     </form>
 
-
-    {{ $car[0]->year }}
-
+    <!-- ↓↓↓ 一行カレンダー ↓↓↓ -->
+    <div class="h3">{{ $datey }}</div>
     <table class="table table-bordered">
       <thead>
         <tr>
           <!-- {{ $car[0]->month }} -->
-          <td>12月</td>
+          <td>{{ $datem }}</td>
           <td>曜日</td>
           <td>タスク</td>
         </tr>
@@ -41,39 +41,45 @@
 
       <tbody>
         @php
-          $week = ["月","火","水","木","金","土","日"];
+          $week = ["日","月","火","水","木","金","土"];
           $d = 1;
         @endphp
-        @for ($i=0 + 5; $i < 31+5; $i++)
+        @foreach ($car as $date)
         <tr>
           <td class="col-md-0.5 text-center">
-            {{$d}}
+            {{ $date->day }}
           </td>
           <td class="col-md-0.5 text-center">
-            {{$week[$i % 7]}}
+            {{ $week[$date->dayOfWeek] }}
           </td>
           <td class="col-md-11">
-            <!--
-              taskを表示 
-              きっとifでタスクがあるかを調べて出力するのかな？
-              
-              @if("ここが分からない")
-                @foreach($get as $g)
-                  {{ $g->body }}
+          <!-- sprintfでゼロ埋めを行い、1~9日にも表記されるように修正 -->
+            @if(isset($task[$datey][$datem][sprintf('%02d', $date->day)]))
+              <div class="d-flex">
+                @foreach($task[$datey][$datem][sprintf('%02d', $date->day)] as $t)
+                  <div class="d-flex">
+                    <p class="mr-2 my-auto">{{ $t["body"] }}</p>
+                    <form action="{{ url('/schedule/edit') }}" method="get" class="mr-5">
+                      {{ csrf_field() }}
+                      <input type="hidden" name="id" value="{{ $t->id }}">
+                      <input type="hidden" name="shift_time" value="{{ $t->shift_time }}">
+                      <input type="hidden" name="body" value="{{ $t->body }}">
+                      <button type="submit" class="">edit</button>
+                      <!-- <a href="/scheldule/edit">{{ $t["body"] }}</a> -->
+                    </form>
+                  </div>
                 @endforeach
-              @endif
-              
-              とか？？？
-            -->
+              </div>
+            @endif
           </td>
         </tr>
         @php $d ++; @endphp
-        @endfor
+        @endforeach
       </tbody>
     </table>
 
-
-    <table class="table table-bordered">
+    <!-- ↓↓↓ 四角いカレンダーはこれ ↓↓↓ -->
+    <!-- <table class="table table-bordered">
       <thead>
         <tr>
           @foreach (['日', '月', '火', '水', '木', '金', '土'] as $dayOfWeek)
@@ -83,40 +89,20 @@
       </thead>
       <tbody>
         @foreach ($car as $date)
-            @if ($date->dayOfWeek == 0) <!-- このあたりのifの意味がよく分からない -->
+            @if ($date->dayOfWeek == 0)
             <tr>
             @endif
-              <!-- 12月のカレンダーを指定している？ -->
               <td
                 @if ($date->month != 12)
                 class="bg-secondary"
                 @endif>
                 {{ $date->day }}
               </td>
-            @if ($date->dayOfWeek == 6) <!-- このあたりのifの意味がよく分からない -->
+            @if ($date->dayOfWeek == 6)
             </tr>
             @endif
         @endforeach
       </tbody>
-    </table>
-
-
-
-
-    @foreach ($get as $g)
-      <div class="d-flex mb-3">
-          <p>{{ $g->id }}  :  {{ $g->user_id }}  :  {{ $g->shift_time }}  :  {{ $g->body }}</p>
-          <form action="{{ url('/schedule/edit') }}" method="get">
-              {{ csrf_field() }}
-              <input type="hidden" name="id" value="{{ $g->id }}">
-              <button type="submit" class="ml-3">edit</button>
-          </form>
-          <form action="{{ url('/schedule/delete') }}" method="post">
-              {{ csrf_field() }}
-              <input type="hidden" name="id" value="{{ $g->id }}">
-              <button type="submit" class="ml-3">delete</button>
-          </form>
-      </div>
-    @endforeach
+    </table> -->
 
 @endsection

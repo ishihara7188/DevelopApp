@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
 
 Route::get('/index', 'IndexController@index')->middleware('auth');
 Route::post('/index', 'IndexController@store')->middleware('auth');

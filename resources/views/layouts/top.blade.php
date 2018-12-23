@@ -27,7 +27,7 @@
     flatpickr(document.getElementById('shift_time'), {
       locale: 'ja',
       dateFormat: "Y/m/d",
-      minDate: new Date()
+      // minDate: new Date()
     });
   </script>
   </body>

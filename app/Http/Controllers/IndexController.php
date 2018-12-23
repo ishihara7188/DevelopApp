@@ -17,10 +17,15 @@ class IndexController extends Controller
         $sched = new Schedule;
         $get = $sched->getAll();
 
+        $datey = date("Y");
+        $datem = date("m");
+
         $carbon = new Calender;
-        $car = $carbon->getCalendarDates(date("Y"),date("m"));
+        $car = $carbon->getCalendarDates($datey,$datem);
+
+        $task = $get;
         
-        return view('index', ['car' => $car, 'get' => $get]);
+        return view('/index', ['get' => $get, 'datey' => $datey, 'datem' => $datem, 'car' => $car, 'task'=>$task]);
     }
 
     public function store(CreateDate $request)
@@ -34,7 +39,7 @@ class IndexController extends Controller
         return redirect('/index');
     }
 
-    public function edit(CreateDate $request)
+    public function edit(Request $request)
     {
         $date = Schedule::find($request->id);
         return view ('/edit', ['date' => $date]);
@@ -42,6 +47,9 @@ class IndexController extends Controller
 
     public function update(CreateDate $request)
     {
+        // \App\Schedule::where('id', $request->id)->delete();
+
+
         $date = Schedule::find($request->id);
         $date->shift_time = $request->shift_time;
         $date->body = $request->body;
@@ -50,9 +58,10 @@ class IndexController extends Controller
         return redirect('/index');
     }
 
-    public function destroy(CreateDate $request)
+    public function destroy(Request $request)
     {
-        Schedule::destroy($request->id);
+        \App\Schedule::where('id', $request->id)->delete();
+        // Schedule::destroy($request->id);
         return redirect('/index');
     }
 }

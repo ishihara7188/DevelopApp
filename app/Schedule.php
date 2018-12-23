@@ -12,6 +12,18 @@ class Schedule extends Model
     ];
 
   public function getAll() {
-      return Schedule::all();
+      $sched = Schedule::all();
+      $ret = [];
+
+      foreach( $sched as $schedule ){  
+        $ret[ date( "Y", strtotime($schedule->shift_time)) ]
+            [ date( "m", strtotime($schedule->shift_time)) ]
+            [ date( "d", strtotime($schedule->shift_time)) ]
+            []
+            =$schedule;
+      }
+      // var_dump($ret);
+
+      return $ret;
   }
 }
