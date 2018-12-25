@@ -23,7 +23,7 @@
           <li class="nav-item mr-3">
             <a href="{{ route('logout') }}"
                 onclick="event.preventDefault();
-                          document.getElementById('logout-form').submit();">
+                document.getElementById('logout-form').submit();">
                 Logout
             </a>
 

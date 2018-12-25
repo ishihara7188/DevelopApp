@@ -1,11 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit schedule')
 @section('content')
-    <!-- <h1>Edit schedule</h1> -->
     <p>Edit your schedule.</p>
-
-
-
       <div class="d-flex mb-3">
           <form action="{{ url('/schedule/edit') }}" method="post">
               {{ csrf_field() }}
@@ -20,5 +16,4 @@
               <button type="submit" class="ml-3 btn btn-danger">delete</button>
           </form>
       </div>
-
 @endsection

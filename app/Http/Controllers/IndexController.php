@@ -15,7 +15,7 @@ class IndexController extends Controller
     public function index()
     {
         $sched = new Schedule;
-        $get = $sched->getAll(Auth::id());
+        $get = $sched->getUserId(Auth::id());
 
         $datey = date("Y");
         $datem = date("m");
@@ -35,7 +35,6 @@ class IndexController extends Controller
         $date->body = $request->body;
         $date->user_id = Auth::id();
         $date->save();
-
         return redirect('/index');
     }
 
@@ -47,9 +46,6 @@ class IndexController extends Controller
 
     public function update(CreateDate $request)
     {
-        // \App\Schedule::where('id', $request->id)->delete();
-
-
         $date = Schedule::find($request->id);
         $date->shift_time = $request->shift_time;
         $date->body = $request->body;
@@ -61,7 +57,6 @@ class IndexController extends Controller
     public function destroy(Request $request)
     {
         \App\Schedule::where('id', $request->id)->delete();
-        // Schedule::destroy($request->id);
         return redirect('/index');
     }
 }
