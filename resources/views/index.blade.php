@@ -1,7 +1,7 @@
-@extends('layouts.top')
+@extends('layouts.app')
 @section('title', 'Scheduler')
 @section('content')
-    <h1 class="mt-0">Scheduler</h1>
+    <!-- <h1 class="mt-0">Scheduler</h1> -->
     <p>Type your schedule.</p>
 
     <!-- ↓↓↓ 投稿フォーム ↓↓↓ -->
@@ -58,15 +58,18 @@
               <div class="d-flex">
                 @foreach($task[$datey][$datem][sprintf('%02d', $date->day)] as $t)
                   <div class="d-flex">
-                    <p class="mr-2 my-auto">{{ $t["body"] }}</p>
-                    <form action="{{ url('/schedule/edit') }}" method="get" class="mr-5">
+                    <!-- <p class="mr-2 my-auto">{{ $t["body"] }}</p>
+                    <form action="{{ url('/schedule/edit') }}" method="get" class="mr-5" name="form">
                       {{ csrf_field() }}
                       <input type="hidden" name="id" value="{{ $t->id }}">
                       <input type="hidden" name="shift_time" value="{{ $t->shift_time }}">
                       <input type="hidden" name="body" value="{{ $t->body }}">
                       <button type="submit" class="">edit</button>
-                      <!-- <a href="/scheldule/edit">{{ $t["body"] }}</a> -->
-                    </form>
+                    </form> -->
+
+                  <!-- aタグでlinkを作成する場合は、idを渡してController側でidを受け取って次の画面に渡してやる -->
+                    <!-- <a href="/schedule/edit/{{ $t->id }}" class="mr-4">{{ $t["body"] }}</a> -->
+                    <a href="{{ url('/schedule/edit', $t->id) }}" class="mr-4">{{ $t["body"] }}</a>
                   </div>
                 @endforeach
               </div>

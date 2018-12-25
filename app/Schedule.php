@@ -11,8 +11,9 @@ class Schedule extends Model
       'user_id', 'shift_time', 'body',
     ];
 
-  public function getAll() {
-      $sched = Schedule::all();
+  public function getAll($user_id) {
+// var_dump($user_id);
+    $sched = \App\Schedule::where('user_id', $user_id)->get();
       $ret = [];
 
       foreach( $sched as $schedule ){  
@@ -22,7 +23,7 @@ class Schedule extends Model
             []
             =$schedule;
       }
-      // var_dump($ret);
+
 
       return $ret;
   }

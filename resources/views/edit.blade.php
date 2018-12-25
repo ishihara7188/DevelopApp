@@ -1,7 +1,7 @@
-@extends('layouts.top')
+@extends('layouts.app')
 @section('title', 'Edit schedule')
 @section('content')
-    <h1>Edit schedule</h1>
+    <!-- <h1>Edit schedule</h1> -->
     <p>Edit your schedule.</p>
 
 

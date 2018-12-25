@@ -15,7 +15,7 @@ class IndexController extends Controller
     public function index()
     {
         $sched = new Schedule;
-        $get = $sched->getAll();
+        $get = $sched->getAll(Auth::id());
 
         $datey = date("Y");
         $datem = date("m");
@@ -25,7 +25,7 @@ class IndexController extends Controller
 
         $task = $get;
         
-        return view('/index', ['get' => $get, 'datey' => $datey, 'datem' => $datem, 'car' => $car, 'task'=>$task]);
+        return view('/index', ['get' => $get, 'datey' => $datey, 'datem' => $datem, 'car' => $car, 'task' => $task]);
     }
 
     public function store(CreateDate $request)
@@ -39,9 +39,9 @@ class IndexController extends Controller
         return redirect('/index');
     }
 
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $date = Schedule::find($request->id);
+        $date = Schedule::find($id);
         return view ('/edit', ['date' => $date]);
     }
 
